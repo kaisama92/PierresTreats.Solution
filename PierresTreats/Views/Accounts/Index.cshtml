@@ -10,18 +10,18 @@
   @if (User.Identity.IsAuthenticated)
   {
     <p>Hello @User.Identity.Name!</p>
-    @* <p>Here are the books you've checked out!</p>
+    <p>Here are the Treats you've purchased!</p>
   
-    @foreach (UserBook join in Model)
+    @foreach (UserTreat join in Model)
     {
-      <p>@Html.ActionLink($"{join.Book.BookName}", "Details", "Books", new { id = join.Book.BookId })</p>
-      @using (Html.BeginForm("Return", "Books"))
+      <p>@Html.ActionLink($"{join.Treat.TreatName}", "Details", "Treats", new { id = join.Treat.TreatId })</p>
+      @using (Html.BeginForm("Return", "Treats"))
       {
-        @Html.Hidden("joinId", @join.UserBookId)
-        <input type="submit" value="Return Book"/>
+        @Html.Hidden("joinId", @join.UserTreatId)
+        <input type="submit" value="Return Treat"/>
       }
     }
-   *@
+  
     @using (Html.BeginForm("LogOff", "Account"))
     {
       <input type="submit" class="btn btn-primary" value="Log out" />
