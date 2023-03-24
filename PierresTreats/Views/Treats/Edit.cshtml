@@ -1,0 +1,23 @@
+@{
+  Layout = "_Layout";
+}
+
+@using PierresTreats.Models;
+@model PierresTreats.Models.Treat;
+
+<div class="container">
+  <h1>Edit @Model.TreatName </h1>
+  
+  @using (Html.BeginForm())
+  {
+    @Html.HiddenFor(model => model.TreatId)
+  
+    @Html.LabelFor(model => model.TreatName, "Name: ")
+    @Html.TextBoxFor(model => model.TreatName)
+    
+    <input type="submit" value="save" />
+  }
+  
+  <p>@Html.ActionLink("Add new Treat", "Create")</p>
+  <p>@Html.ActionLink("Home", "Index", "Home")</p>
+</div>
