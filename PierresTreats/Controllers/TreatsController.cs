@@ -36,7 +36,7 @@ namespace Library.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Treat thisTreat, int FlavorId, int stockQuantity)
+    public ActionResult Create(Treat thisTreat, int flavorId, int stockQuantity)
     {
       if (!ModelState.IsValid)
       {
@@ -45,7 +45,16 @@ namespace Library.Controllers
       }
       else
       {
-        thisTreat.StockQuantity = stockQuantity; 
+        if (flavorId != 0)
+        {
+          #nullable enable
+          TreatFlavor? joinEntity = _db.TreatFlavors.FirstOrDefault(join => (join.FlavorId == flavorId && join.TreatId == thisTreat.TreatId));
+          #nullable disable
+          if (joinEntity == null && flavorId != 0)
+          {
+            _db.TreatFlavors.Add(new TreatFlavor() { FlavorId = flavorId, TreatId = thisTreat.TreatId });
+          }
+        }
         _db.Treats.Add(thisTreat);
         _db.SaveChanges();
         return RedirectToAction("Index");
@@ -128,27 +137,27 @@ namespace Library.Controllers
       ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
       // book.Copies = book.Copies - 1;
       #nullable enable
-      UserBook? joinEntity = _db.UserBooks.FirstOrDefault(join => (join.UserId == currentUser.UserName && join.TreatId == book.TreatId));
+      UserTreat? joinEntity = _db.UserTreats.FirstOrDefault(join => (join.UserName == currentUser.UserName && join.TreatId == treat.TreatId));
       #nullable disable
       if (joinEntity == null)
       {
-        Book thisTreat = _db.Books.FirstOrDefault(model => model.TreatId == book.TreatId);
-        thisTreat.Copies = thisTreat.Copies - 1;
-        _db.Books.Update(thisTreat);
-        _db.UserBooks.Add(new UserBook() { UserId = currentUser.UserName, TreatId = book.TreatId });
+        Treat thisTreat = _db.Treats.FirstOrDefault(model => model.TreatId == treat.TreatId);
+        thisTreat.StockQuantity = thisTreat.StockQuantity - 1;
+        _db.Treats.Update(thisTreat);
+        _db.UserTreats.Add(new UserTreat() { UserName = currentUser.UserName, TreatId = treat.TreatId });
         _db.SaveChanges();
       }
-      return RedirectToAction("Details", new { id = book.TreatId });
+      return RedirectToAction("Details", new { id = treat.TreatId });
     }
 
     [HttpPost]
     public ActionResult Return(int joinId)
     {
-      UserBook join = _db.UserBooks.FirstOrDefault(entry => entry.UserTreatId == joinId);
-      Book book = _db.Books.FirstOrDefault(model => model.TreatId == join.TreatId);
-      book.Copies += 1;
-      _db.Books.Update(book);
-      _db.UserBooks.Remove(join);
+      UserTreat join = _db.UserTreats.FirstOrDefault(entry => entry.UserTreatId == joinId);
+      Treat treat = _db.Treats.FirstOrDefault(model => model.TreatId == join.TreatId);
+      treat.StockQuantity += 1;
+      _db.Treats.Update(treat);
+      _db.UserTreats.Remove(join);
       _db.SaveChanges();
       return RedirectToAction("Index", "Account");
     }
@@ -158,14 +167,14 @@ namespace Library.Controllers
       return View(error);
     }
 
-    public ActionResult AddCopy(int id)
+    public ActionResult AddTreats(int id)
     {
-      Book thisTreat = _db.Books.FirstOrDefault(model => model.TreatId == id);
+      Treat thisTreat = _db.Treats.FirstOrDefault(model => model.TreatId == id);
       return View(thisTreat);
     }
 
     [HttpPost]
-    public ActionResult AddCopy(Book book, int num)
+    public ActionResult AddTreats(Treat treat, int num)
     {
       if (num == 0)
       {
@@ -173,12 +182,11 @@ namespace Library.Controllers
         string errorMessage = "Input Needs To Be A NUMBER Greater Than 0 If You Want To Add Copies!";
         ViewBag.errorMessage1 = errorMessage;
         error.ErrorMessage = errorMessage;
-        error.StoredId = book.TreatId;
+        error.StoredId = treat.TreatId;
         return RedirectToAction("Error", error);
       }
-      Book thisTreat = _db.Books.FirstOrDefault(model => model.TreatId == book.TreatId);
-      thisTreat.Copies += num;
-      thisTreat.MaxCopies += num;
+      Treat thisTreat = _db.Treats.FirstOrDefault(model => model.TreatId == treat.TreatId);
+      thisTreat.StockQuantity += num;
       _db.Update(thisTreat);
       _db.SaveChanges();
       return RedirectToAction("Details", new { id = thisTreat.TreatId });
