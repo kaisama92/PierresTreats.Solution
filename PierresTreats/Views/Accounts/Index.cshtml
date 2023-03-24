@@ -1,0 +1,36 @@
+@{
+  Layout = "_Layout";
+}
+
+@using PierresTreats.Models
+
+<div class="container">
+  <h2>Authentication with Identity</h2>
+  <hr />
+  @if (User.Identity.IsAuthenticated)
+  {
+    <p>Hello @User.Identity.Name!</p>
+    @* <p>Here are the books you've checked out!</p>
+  
+    @foreach (UserBook join in Model)
+    {
+      <p>@Html.ActionLink($"{join.Book.BookName}", "Details", "Books", new { id = join.Book.BookId })</p>
+      @using (Html.BeginForm("Return", "Books"))
+      {
+        @Html.Hidden("joinId", @join.UserBookId)
+        <input type="submit" value="Return Book"/>
+      }
+    }
+   *@
+    @using (Html.BeginForm("LogOff", "Account"))
+    {
+      <input type="submit" class="btn btn-primary" value="Log out" />
+    }
+  }
+  else
+  {
+    <p>@Html.ActionLink("Register", "Register")</p>
+    <p>@Html.ActionLink("Log in", "Login")</p>
+  }
+  <p>@Html.ActionLink("Home", "Index", "Home")</p>
+</div>
