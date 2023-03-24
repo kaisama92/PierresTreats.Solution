@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace PierresTreats.Models
 {
-  public class Treats
+  public class Treat
   {
-    public int TreatsId { get; set; }
-    public string TreatsName { get; set; }
+    public int TreatId { get; set; }
+    public string TreatName { get; set; }
   }
 }
