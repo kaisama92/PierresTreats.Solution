@@ -11,5 +11,6 @@ namespace PierresTreats.Models
     [Range(1, int.MaxValue, ErrorMessage = "You must enter a number greater than or equal to 1.")]
     public int StockQuantity { get; set; }
     public List<TreatFlavor> JoinEntities { get; set; }
+    public List<UserTreat> JoinEntities2 { get; set; }
   }
 }
