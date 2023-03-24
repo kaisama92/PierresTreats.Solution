@@ -1,0 +1,28 @@
+@{
+  Layout = "_Layout";
+}
+
+@using PierresTreats.Models
+@model PierresTreats.Models.Treat
+
+<div class="container">
+  <h1>Treat Checkout</h1>
+  
+  <h3>Checkout @Html.ActionLink($"{Model.TreatName}", "Details")?</h3>
+  
+  @if (Model.StockQuantity > 0)
+  {
+    @using (Html.BeginForm())
+    {
+      @Html.HiddenFor(model => model.TreatId)
+      @Html.HiddenFor(model => model.TreatName)
+  
+      <input type="submit" value="Checkout" />
+    }
+  }
+  else
+  {
+    <h4>There are none left! Please come back later! </h4>
+  }
+  
+</div>
