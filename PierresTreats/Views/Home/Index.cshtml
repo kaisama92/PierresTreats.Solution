@@ -1,0 +1,57 @@
+@{
+  Layout = "_Layout";
+}
+@using PierresTreats.Models;
+
+<div class="container">
+
+  <h1>Welcome to Pierre's Treat Store!</h1>
+
+
+  <hr>
+@* 
+  <h4>Catalog</h4>
+  @if (Model["catalogs"].Length == 0)
+  {
+    <p>No catalogs have been added yet!</p>
+  } 
+  <ul>
+    @foreach (Catalog thisCatalog in Model["catalogs"])
+    {
+      <li>@Html.ActionLink(@thisCatalog.CatalogName, "Details", "Catalogs", new { id = @thisCatalog.CatalogId})</li>
+    }
+  </ul> *@
+
+  <h4>Treats</h4>
+  @if (Model["treats"].Length == 0)
+  {
+    <p>No treats have been added yet!</p>
+  } 
+  <ul>
+    @foreach (Treat thisTreat in Model["treats"])
+    {
+      <li>@Html.ActionLink(@thisTreat.TreatName, "Details", "Treats", new { id = @thisTreat.TreatId}) | Available @thisTreat.StockQuantity </li>
+    }
+  </ul>
+
+  <hr>
+
+  <h4>Flavors</h4>
+  @if (Model["flavors"].Length == 0)
+  {
+    <p>No flavors have been added yet!</p>
+  } 
+  <ul>
+    @foreach (Flavor thisFlavor in Model["flavors"])
+    {
+      <li>@Html.ActionLink(@thisFlavor.FlavorName, "Details", "Flavors", new { id = @thisFlavor.FlavorId})</li>
+    }
+  </ul>
+
+  <hr>
+  <h4>Make sure to sign in to access additional features!</h4>
+  <p>@Html.ActionLink("Manage Treats", "Index", "Treats")</p> 
+  @* <p>@Html.ActionLink("Manage Catalog", "Index", "Catalogs")</p> *@
+  <p>@Html.ActionLink("Manage Flavors", "Index", "Flavor")</p>
+  <p>@Html.ActionLink("Create or manage an account", "Index", "Account")</p>
+</div>
