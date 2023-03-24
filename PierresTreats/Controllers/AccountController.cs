@@ -26,15 +26,15 @@ namespace Library.Controllers
     }
 
     [Authorize]
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     { 
-      // string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      // ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-      // List<UserBook> usersBooks = _db.UserBooks
-      //                               .Where(entry => entry.UserId == currentUser.UserName)
-      //                               .Include(entry => entry.Book)
-      //                               .ToList();
-      return View();
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      List<UserTreat> userTreats = _db.UserTreats
+                                    .Where(entry => entry.UserName == currentUser.UserName)
+                                    .Include(entry => entry.Treat)
+                                    .ToList();
+      return View(userTreats);
     }
     
     public IActionResult Register()
