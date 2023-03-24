@@ -1,0 +1,28 @@
+@{
+  Layout = "_Layout";
+}
+
+@model PierresTreats.Models.Treat
+
+<div class="container">
+  <h4>Add a new Treat</h4>
+  
+  <p>@Html.ValidationMessageFor(model => model.TreatName, "", new { @class = "text-danger", @style = "font-weight: 600;" })</p>
+  <p>@Html.ValidationMessageFor(model => model.StockQuantity, "", new { @class = "text-danger", @style = "font-weight: 600;" })</p>
+  
+  @using (Html.BeginForm())
+  {
+    @Html.LabelFor(model => model.TreatName, "Treat Name")
+    @Html.TextBoxFor(model => model.TreatName)
+  
+    @Html.LabelFor(model => model.StockQuantity, "How many copies?")
+    @Html.TextBoxFor(model => model.StockQuantity)
+
+    @Html.Label("Optionally, Add a Flavor")
+    @Html.DropDownList("FlavorId")
+  
+    <br>
+    <input type="submit" value="Add new Treat" class="" />
+  }
+  <p>@Html.ActionLink("Show all Treats", "Index")</p>
+</div>
