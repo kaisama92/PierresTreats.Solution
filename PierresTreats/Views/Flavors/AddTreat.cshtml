@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model PierresTreats.Models.Flavor
+
+<div class="container">
+  <h1>Assign a Treat to @Html.DisplayFor(model => model.FlavorName)</h1>
+  
+  @using (Html.BeginForm())
+  {
+      @Html.HiddenFor(model => model.FlavorId)
+  
+      @Html.Label("Select a Treat")
+      @Html.DropDownList("TreatId")
+  
+      <input type="submit" value="Save" />
+  }
+  
+  @Html.ActionLink("Cancel", "Details", new { id = Model.FlavorId })
+</div>
