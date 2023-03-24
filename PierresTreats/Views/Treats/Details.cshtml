@@ -18,7 +18,7 @@
     }
     else
     {
-      <h4>Author(s):</h4>
+      <h4>Flavor(s):</h4>
       @foreach (TreatFlavor joinEntity in Model.JoinEntities)
       {
         <li>@Html.ActionLink($"{joinEntity.Flavor.FlavorName}", "Details", "Flavors")</li>
