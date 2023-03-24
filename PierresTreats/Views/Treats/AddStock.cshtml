@@ -1,0 +1,23 @@
+@{
+  Layout = "_Layout";
+}
+
+@using PierresTreats.Models;
+@model PierresTreats.Models.Treat;
+
+
+<div class="container">
+  <h1>Add More of This Treat: @Model.TreatName</h1>
+  
+  @using (Html.BeginForm())
+  {
+    @Html.HiddenFor(model => model.TreatId)
+  
+    @Html.Label("Enter Number of Copies to Add")
+    @Html.TextBox("num")
+    <input type="submit" value="Add Copies">
+  }
+  
+  
+  <p>@Html.ActionLink("Cancel", "Details", new { id = Model.TreatId })</p>
+</div>
