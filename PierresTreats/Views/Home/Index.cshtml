@@ -37,14 +37,17 @@
   <hr>
 
   <h4>Flavors</h4>
-  @if (Model["flavors"].Length == 0)
+  @if (Model["flavors"].Length <= 1)
   {
     <p>No flavors have been added yet!</p>
   } 
   <ul>
     @foreach (Flavor thisFlavor in Model["flavors"])
     {
+      @if (thisFlavor.FlavorId > 1)
+      {
       <li>@Html.ActionLink(@thisFlavor.FlavorName, "Details", "Flavors", new { id = @thisFlavor.FlavorId})</li>
+      }
     }
   </ul>
 
@@ -52,6 +55,6 @@
   <h4>Make sure to sign in to access additional features!</h4>
   <p>@Html.ActionLink("Manage Treats", "Index", "Treats")</p> 
   @* <p>@Html.ActionLink("Manage Catalog", "Index", "Catalogs")</p> *@
-  <p>@Html.ActionLink("Manage Flavors", "Index", "Flavor")</p>
+  <p>@Html.ActionLink("Manage Flavors", "Index", "Flavors")</p>
   <p>@Html.ActionLink("Create or manage an account", "Index", "Account")</p>
 </div>
