@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using PierresTreats.ViewModels;
 
-namespace Library.Controllers
+namespace PierresTreats.Controllers
 {
   public class AccountController : Controller
   {

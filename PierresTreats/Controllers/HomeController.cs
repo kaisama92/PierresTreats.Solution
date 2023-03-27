@@ -17,11 +17,17 @@ namespace PierresTreats.Controllers
     [HttpGet("/")]
     public ActionResult Index()
     {
-      Flavor[] thesetreats = _db.Flavors.ToArray();
-      Treat[] theseflavors = _db.Treats.ToArray();
+      if (_db.Flavors.ToList().Count() == 0)
+      {
+        Flavor initialFlavor = new Flavor { FlavorName = "None" };
+      _db.Flavors.Add(initialFlavor);
+      _db.SaveChanges();
+      }
+      Flavor[] theseFlavors = _db.Flavors.ToArray();
+      Treat[] theseTreats = _db.Treats.ToArray();
       Dictionary<string,object[]> model = new Dictionary<string, object[]>();
-      model.Add("treats", thesetreats);
-      model.Add("flavors", theseflavors);
+      model.Add("treats", theseTreats);
+      model.Add("flavors", theseFlavors);
       return View(model);
     }
   }
