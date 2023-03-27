@@ -36,7 +36,7 @@ namespace Library.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Treat thisTreat, int flavorId, int stockQuantity)
+    public ActionResult Create(Treat thisTreat, int flavorId)
     {
       if (!ModelState.IsValid)
       {
@@ -53,7 +53,9 @@ namespace Library.Controllers
           if (joinEntity == null && flavorId != 0)
           {
             _db.TreatFlavors.Add(new TreatFlavor() { FlavorId = flavorId, TreatId = thisTreat.TreatId });
+            _db.SaveChanges();
           }
+          
         }
         _db.Treats.Add(thisTreat);
         _db.SaveChanges();
