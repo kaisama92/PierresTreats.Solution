@@ -135,6 +135,14 @@ namespace Library.Controllers
     {
       string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+      if (currentUser.ItemsBought.ContainsKey($"{treat.TreatName}"))
+      {
+        currentUser.ItemsBought[$"{treat.TreatName}"] += 1;
+      }
+      else
+      {
+        currentUser.ItemsBought.Add($"{treat.TreatName}", 1);
+      }
       // book.Copies = book.Copies - 1;
       #nullable enable
       UserTreat? joinEntity = _db.UserTreats.FirstOrDefault(join => (join.UserName == currentUser.UserName && join.TreatId == treat.TreatId));
