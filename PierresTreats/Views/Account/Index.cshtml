@@ -1,0 +1,39 @@
+@{
+  Layout = "_Layout";
+}
+
+@using PierresTreats.Models
+
+<div class="container">
+  <h2>Authentication with Identity</h2>
+  <hr />
+  @if (User.Identity.IsAuthenticated)
+  {
+    <p>Hello @User.Identity.Name!</p>
+    @if (Model.Count != 0)
+    {
+      <p>Here are the Treats you've purchased!</p>
+    }
+  
+    @foreach (UserTreat join in Model)
+    {
+      <p>@Html.ActionLink($"{join.Treat.TreatName}", "Details", "Treats", new { id = join.Treat.TreatId })</p>
+      @using (Html.BeginForm("Return", "Treats"))
+      {
+        @Html.Hidden("joinId", @join.UserTreatId)
+        <input type="submit" value="Return Treat"/>
+      }
+    }
+  
+    @using (Html.BeginForm("LogOff", "Account"))
+    {
+      <input type="submit" class="btn btn-primary" value="Log out" />
+    }
+  }
+  else
+  {
+    <p>@Html.ActionLink("Register", "Register")</p>
+    <p>@Html.ActionLink("Log in", "Login")</p>
+  }
+  <p>@Html.ActionLink("Home", "Index", "Home")</p>
+</div>
