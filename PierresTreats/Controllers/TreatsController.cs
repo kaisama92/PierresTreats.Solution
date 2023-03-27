@@ -45,6 +45,8 @@ namespace Library.Controllers
       }
       else
       {
+        _db.Treats.Add(thisTreat);
+        _db.SaveChanges();
         if (flavorId != 0)
         {
           #nullable enable
@@ -57,8 +59,6 @@ namespace Library.Controllers
           }
           
         }
-        _db.Treats.Add(thisTreat);
-        _db.SaveChanges();
         return RedirectToAction("Index");
       }
     }

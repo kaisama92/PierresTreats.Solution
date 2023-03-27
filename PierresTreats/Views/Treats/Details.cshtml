@@ -12,7 +12,7 @@
     <br>
     
     <h4>@Model.StockQuantity are available.</h4>
-    @if (Model.JoinEntities.Count == 0)
+    @if (Model.JoinEntities.Count <= 1)
     {
       <h4>You haven't assigned any Flavors to this Treat! Click @Html.ActionLink("here", "AddFlavor", new { id = Model.TreatId }) to add a Flavor to this Treat!</h4>
     }
@@ -21,11 +21,14 @@
       <h4>Flavor(s):</h4>
       @foreach (TreatFlavor joinEntity in Model.JoinEntities)
       {
+        @if (joinEntity.Flavor.FlavorId > 1)
+        {
         <li>@Html.ActionLink($"{joinEntity.Flavor.FlavorName}", "Details", "Flavors")</li>
-        @using (Html.BeginForm("DeleteJoin", "Books"))
+        @using (Html.BeginForm("DeleteJoin", "Treats"))
         {
           @Html.Hidden("joinId", @joinEntity.TreatFlavorId)
           <input type="submit" value="Remove" />
+        }
         }
       }
     }
@@ -34,8 +37,8 @@
     <h4>@Html.ActionLink("Add More of this Treat", "AddStock", new { id = Model.TreatId })</h4>
     <br>
     
-    <p>@Html.ActionLink("Edit this book", "Edit", new { id = Model.TreatId })</p>
-    <p>@Html.ActionLink("Checkout this book", "Checkout", new { id = Model.TreatId })</p>
+    <p>@Html.ActionLink("Edit this treat", "Edit", new { id = Model.TreatId })</p>
+    <p>@Html.ActionLink("Checkout this treat", "Checkout", new { id = Model.TreatId })</p>
     <p>@Html.ActionLink("Back to list", "Index")</p>
     <p>@Html.ActionLink("Add a new Flavor Here", "AddFlavor", new { id = Model.TreatId })</p>
 </div>
