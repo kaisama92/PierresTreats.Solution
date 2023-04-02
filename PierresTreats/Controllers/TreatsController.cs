@@ -169,14 +169,14 @@ namespace Library.Controllers
       return View(error);
     }
 
-    public ActionResult AddTreats(int id)
+    public ActionResult AddStock(int id)
     {
       Treat thisTreat = _db.Treats.FirstOrDefault(model => model.TreatId == id);
       return View(thisTreat);
     }
 
     [HttpPost]
-    public ActionResult AddTreats(Treat treat, int num)
+    public ActionResult AddStock(Treat treat, int num)
     {
       if (num == 0)
       {
