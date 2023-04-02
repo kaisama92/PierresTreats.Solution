@@ -11,9 +11,11 @@
   @using (Html.BeginForm())
   {
     @Html.HiddenFor(model => model.TreatId)
+    @Html.HiddenFor(model => model.StockQuantity)
   
     @Html.LabelFor(model => model.TreatName, "Name: ")
     @Html.TextBoxFor(model => model.TreatName)
+    
     
     <input type="submit" value="save" />
   }
